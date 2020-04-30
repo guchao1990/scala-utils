@@ -58,7 +58,7 @@ object IpUtils {
 
   /* ipv4 convert from long to string */
   def ipv4FromLongToString(ip: Long): String =
-    if (ip >= 0 && ip <= 4294967295L) Array(ip >>> 24, (ip & 0x00FFFFFF) >>> 16, (ip & 0x0000FFFF) >>> 8, ip & 0x000000FF).mkString(".") else Constants.LABEL_EMPTY
+    if (ip >= 0 && ip <= 4294967295L) Array(ip >>> 24, (ip & 0x00FFFFFF) >>> 16, (ip & 0x0000FFFF) >>> 8, ip & 0x000000FF).mkString(".") else ""
 
   /* ipv6 convert from long to String */
   def ipv6FromLongToString(ip: Option[BigInteger]): Option[String] = {
@@ -72,7 +72,7 @@ object IpUtils {
         Integer.toHexString(ip.get.shiftRight(32).and(BigInteger.valueOf(0xFFFF)).intValue).toUpperCase,
         Integer.toHexString(ip.get.shiftRight(16).and(BigInteger.valueOf(0xFFFF)).intValue).toUpperCase,
         Integer.toHexString(ip.get.and(BigInteger.valueOf(0xFFFF)).intValue)).toUpperCase)
-    } else Some(Constants.LABEL_EMPTY)
+    } else Some("")
   }
 
   // whether is legal v6 or not
@@ -82,13 +82,13 @@ object IpUtils {
   }
 
   /* whether is a private ip or not */
-  def isPrivateIP(ip: Long): Int = ip match {
-    case i if i >=  167772160L && i <=  184549375L => Constants.LABEL_ONE // 10.0.0.0 - 10.255.255.255
-    case i if i >= 1681915904L && i <= 1686110207L => Constants.LABEL_ONE // 100.64.0.0 - 100.127.255.255
-    case i if i >= 2214592512L && i <= 2231369727L => Constants.LABEL_ONE // 132.0.0.0 - 132.255.255.255
-    case i if i >= 2886729728L && i <= 2887778303L => Constants.LABEL_ONE // 172.16.0.0 - 172.31.255.255
-    case i if i >= 3232235520L && i <= 3232301055L => Constants.LABEL_ONE // 192.168.0.0 - 192.168.255.255
-    case _ => Constants.LABEL_ZERO
+  def isPrivateIP(ip: Long): Boolean = ip match {
+    case i if i >=  167772160L && i <=  184549375L => true // 10.0.0.0 - 10.255.255.255
+    case i if i >= 1681915904L && i <= 1686110207L => true // 100.64.0.0 - 100.127.255.255
+    case i if i >= 2214592512L && i <= 2231369727L => true // 132.0.0.0 - 132.255.255.255
+    case i if i >= 2886729728L && i <= 2887778303L => true // 172.16.0.0 - 172.31.255.255
+    case i if i >= 3232235520L && i <= 3232301055L => true // 192.168.0.0 - 192.168.255.255
+    case _ => false
   }
 
   /** get ipv4 number */
