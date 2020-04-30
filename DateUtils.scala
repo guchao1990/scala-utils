@@ -1,8 +1,6 @@
 import java.text.{DateFormat, ParseException, SimpleDateFormat}
 import java.util.{Calendar, Date}
 
-import com.eversec.ipsm.Constants
-
 /** Created by Gu Chao on 10/11/2019. */
 object DateUtils {
 
@@ -52,7 +50,7 @@ object DateUtils {
     val date = if (isMillisecond) new Date(d.toLong) else new Date(d.toLong * 1000)
     DF_YYYY_MM_DD_HH_MM_SS.get.format(date)
   } catch {
-    case _: NumberFormatException => Constants.LABEL_EMPTY
+    case _: NumberFormatException => ""
   }
 
   /** Long -> String("yyyy-MM-dd HH:mm:ss") */
